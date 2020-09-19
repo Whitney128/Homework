@@ -7,7 +7,8 @@ import time
 import requests
 
 
-def mars_info():
+def scrape():
+	mars_info ={}
 	executable_path = {'executable_path': 'chromedriver'}
 	browser = Browser('chrome', **executable_path, headless=False)
 
