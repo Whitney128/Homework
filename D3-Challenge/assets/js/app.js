@@ -12,7 +12,7 @@ var width = svgWidth - margin.left - margin.right;
 var height = svgHeight - margin.top - margin.bottom;
 
 var svg = d3
-  .select("scatter")
+  .select("#scatter")
   .append("svg")
   .attr("width", svgWidth)
   .attr("height", svgHeight + 40); 
@@ -73,6 +73,28 @@ function renderText(circletextGroup, newXScale, newYScale, chosenXAxis, chosenYA
     return circletextGroup;
 }
 
+function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, textGroup) {
+    // Conditional for X Axis.
+    if (chosenXAxis === "poverty") {
+        var xlabel = "Poverty: ";
+    } else if (chosenXAxis === "income") {
+        var xlabel = "Median Income: "
+    } else {
+        var xlabel = "Age: "
+    }
+    // Conditional for Y Axis.
+    if (chosenYAxis === "healthcare") {
+        var ylabel = "Lacks Healthcare: ";
+    } else if (chosenYAxis === "smokes") {
+        var ylabel = "Smokers: "
+    } else {
+        var ylabel = "Obesity: "
+      }
+    }
+
+ 
+      
+
 svg.append("g").attr("class", "xText");
 var xText = d3.select(".xText");
 
@@ -124,83 +146,83 @@ var xText = d3.select(".yText");
 
    //  chartGroup.append("g")
    //    .call(leftAxis);
-});
+//});
 
-//    var xAxis = chartGroup.append("g")
-//     .attr("transform", `translate(0, ${height})`)
-//     .call(bottomAxis);
-// });
+   // var xAxis = chartGroup.append("g")
+   //  .attr("transform", `translate(0, ${height})`)
+   //  .call(bottomAxis);
+ //});
   //   var yAxis = chartGroup.append("g")
   //   .call(leftAxis);
 
-  //   var circlesGroup = chartGroup.selectAll("g circle")
-  //   .data(data)
-  //   .enter()
-  //   .append("g");
+    var circlesGroup = chartGroup.selectAll("g circle")
+    .data(data)
+    .enter()
+    .append("g");
+//});
+    var circlesXY = circlesGroup.append("circle")
+    .attr("cx", d => xLinearScale(d[chosenXAxis]))
+    .attr("cy", d => yLinearScale(d[chosenYAxis]))
+    .attr("r", 15)
+    .classed("stateCircle", true);
+//});
+    // var circlesText = circlesGroup.append("text")
+    // .text(d => d.abbr)
+    // .attr("dx", d => xLinearScale(d[chosenXAxis]))
+    // .attr("dy", d => yLinearScale(d[chosenYAxis]) + 5)
+    // .classed("stateText", true);
+});
+      const xlabelsGroup = chartGroup.append("g")
+    .attr("transform", `translate(${width / 2}, ${height})`);
 
-  //   var circlesXY = circlesGroup.append("circle")
-  //   .attr("cx", d => xLinearScale(d[chosenXAxis]))
-  //   .attr("cy", d => yLinearScale(d[chosenYAxis]))
-  //   .attr("r", 15)
-  //   .classed("stateCircle", true);
+     const povertyLabel = xlabelsGroup.append("text")
+    .attr("x", 0)
+    .attr("y", 40)
+    .attr("value", "poverty") 
+    .text("In Poverty (%)")
+    .classed("active", true);
 
-  //   var circlesText = circlesGroup.append("text")
-  //   .text(d => d.abbr)
-  //   .attr("dx", d => xLinearScale(d[chosenXAxis]))
-  //   .attr("dy", d => yLinearScale(d[chosenYAxis]) + 5)
-  //   .classed("stateText", true);
+     const ageLabel = xlabelsGroup.append("text")
+    .attr("x", 0)
+    .attr("y", 60)
+    .attr("value", "age") 
+    .text("Age (Median)")
+    .classed("inactive", true);
 
-  //     const xlabelsGroup = chartGroup.append("g")
-  //   .attr("transform", `translate(${width / 2}, ${height})`);
+     const incomeLabel = xlabelsGroup.append("text")
+    .attr("x", 0)
+    .attr("y", 80)
+    .attr("value", "income") 
+    .text("Household Income (Median)")
+    .classed("inactive", true);
 
-  //    const povertyLabel = xlabelsGroup.append("text")
-  //   .attr("x", 0)
-  //   .attr("y", 40)
-  //   .attr("value", "poverty") 
-  //   .text("In Poverty (%)")
-  //   .classed("active", true);
+    const ylabelsGroup = chartGroup.append("g");
 
-  //    const ageLabel = xlabelsGroup.append("text")
-  //   .attr("x", 0)
-  //   .attr("y", 60)
-  //   .attr("value", "age") 
-  //   .text("Age (Median)")
-  //   .classed("inactive", true);
+     const healthcareLabel = ylabelsGroup.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("x", -(height / 2))
+    .attr("y", -40)
+    .attr("value", "healthcare")
+    .text("Lacks Healthcare (%)")
+    .classed("active", true);
 
-  //    const incomeLabel = xlabelsGroup.append("text")
-  //   .attr("x", 0)
-  //   .attr("y", 80)
-  //   .attr("value", "income") 
-  //   .text("Household Income (Median)")
-  //   .classed("inactive", true);
+    const smokesLabel = ylabelsGroup.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("x", -(height / 2))
+    .attr("y", -60)
+    .attr("value", "smokes")
+    .text("Smokes (%)")
+    .classed("inactive", true);
 
-  //   const ylabelsGroup = chartGroup.append("g");
+      const obeseLabel = ylabelsGroup.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("x", -(height / 2))
+    .attr("y", -80)
+    .attr("value", "obesity") 
+    .text("Obese (%)")
+    .classed("inactive", true);
 
-  //    const healthcareLabel = ylabelsGroup.append("text")
-  //   .attr("transform", "rotate(-90)")
-  //   .attr("x", -(height / 2))
-  //   .attr("y", -40)
-  //   .attr("value", "healthcare")
-  //   .text("Lacks Healthcare (%)")
-  //   .classed("active", true);
-
-  //   const smokesLabel = ylabelsGroup.append("text")
-  //   .attr("transform", "rotate(-90)")
-  //   .attr("x", -(height / 2))
-  //   .attr("y", -60)
-  //   .attr("value", "smokes")
-  //   .text("Smokes (%)")
-  //   .classed("inactive", true);
-
-  //     const obeseLabel = ylabelsGroup.append("text")
-  //   .attr("transform", "rotate(-90)")
-  //   .attr("x", -(height / 2))
-  //   .attr("y", -80)
-  //   .attr("value", "obesity") 
-  //   .text("Obese (%)")
-  //   .classed("inactive", true);
-
-  //   circlesGroup = updateToolTip(circlesGroup, chosenXAxis, chosenYAxis);
+    // circlesGroup = updateToolTip(circlesGroup, chosenXAxis, chosenYAxis);
 
   //     xlabelsGroup.selectAll("text")
   //   .on("click", function() {
