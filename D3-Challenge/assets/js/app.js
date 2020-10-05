@@ -41,7 +41,6 @@ function xScale(data, chosenXAxis, chartWidth) {
 }
 
 function yScale(data, chosenYAxis, chartHeight) {
-    // Create scales.
     var yLinearScale = d3.scaleLinear()
         .domain([d3.min(data, d => d[chosenYAxis]) * .8,
             d3.max(data, d => d[chosenYAxis]) * 1.2])
@@ -74,7 +73,6 @@ function renderText(circletextGroup, newXScale, newYScale, chosenXAxis, chosenYA
 }
 
 function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, textGroup) {
-    // Conditional for X Axis.
     if (chosenXAxis === "poverty") {
         var xlabel = "Poverty: ";
     } else if (chosenXAxis === "income") {
@@ -82,7 +80,6 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, textGroup) {
     } else {
         var xlabel = "Age: "
     }
-    // Conditional for Y Axis.
     if (chosenYAxis === "healthcare") {
         var ylabel = "Lacks Healthcare: ";
     } else if (chosenYAxis === "smokes") {
@@ -107,12 +104,12 @@ var xText = d3.select(".yText");
   	console.log(data);
 
   		data.forEach(function(data) {
-  		data.state = +data.state; 
+  		data.state = data.state; 
         data.age = +data.age;
         data.smokes = +data.smokes;
         data.healthcare = +data.healthcare;
         data.poverty = +data.poverty;
-        data.abbr = +data.abbr;
+        data.abbr = data.abbr;
         data.income = +data.income;
       });
 
@@ -240,10 +237,12 @@ var xText = d3.select(".yText");
 
       circlesText = renderXText(circlesText, xLinearScale, chosenXAxis);
 
-    }
+    //}
 
 
       circlesGroup = updateToolTip(circlesGroup, chosenXAxis, chosenYAxis);
+
+    //}
 
           if (chosenXAxis === "age") {
         povertyLabel
@@ -279,13 +278,13 @@ var xText = d3.select(".yText");
         incomeLabel
           .classed("active", false)
           .classed("inactive", true);
+        }
       }
     });
   // });
 
        ylabelsGroup.selectAll("text")
     .on("click", function() {
-    // get value of selection
     const value = d3.select(this).attr("value");
     if (value !== chosenYAxis) {
 
