@@ -111,7 +111,7 @@ var xText = d3.select(".yText");
         data.poverty = +data.poverty;
         data.abbr = data.abbr;
         data.income = +data.income;
-      });
+      })
 
     var xScale = d3.scaleLinear()
     .domain(d3.extent(data, d => d.poverty))
@@ -125,11 +125,6 @@ var xText = d3.select(".yText");
     .attr("stroke", "black")
     .attr("stroke-width", "1")
     .attr("fill", "none")
-    //.attr("d", createLine(data));
-
-  //   }).catch(function(error) {
-  // console.log(error);
-  //});
 
   var xLinearScale = xScale(data, chosenXAxis);
   var yLinearScale = yScale(data, chosenYAxis);
@@ -137,38 +132,23 @@ var xText = d3.select(".yText");
   var bottomAxis = d3.axisBottom(xLinearScale);
   var leftAxis = d3.axisLeft(yLinearScale);
 
-   // chartGroup.append("g")
-   //    .attr("transform", `translate(0, ${height})`)
-   //    .call(bottomAxis);
-
-   //  chartGroup.append("g")
-   //    .call(leftAxis);
-//});
-
-   // var xAxis = chartGroup.append("g")
-   //  .attr("transform", `translate(0, ${height})`)
-   //  .call(bottomAxis);
- //});
-  //   var yAxis = chartGroup.append("g")
-  //   .call(leftAxis);
-
     var circlesGroup = chartGroup.selectAll("g circle")
     .data(data)
     .enter()
     .append("g");
-//});
+
     var circlesXY = circlesGroup.append("circle")
     .attr("cx", d => xScale(d[chosenXAxis]))
     .attr("cy", d => yScale(d[chosenYAxis]))
     .attr("r", 15)
     .classed("stateCircle", true);
-//});
+
     var circlesText = circlesGroup.append("text")
     .text(d => d.abbr)
     .attr("dx", d => xScale(d[chosenXAxis]))
     .attr("dy", d => yScale(d[chosenYAxis]) + 5)
     .classed("stateText", true);
-});
+//})
       const xlabelsGroup = chartGroup.append("g")
     .attr("transform", `translate(${width / 2}, ${height})`);
 
@@ -218,9 +198,7 @@ var xText = d3.select(".yText");
     .attr("value", "obesity") 
     .text("Obese (%)")
     .classed("inactive", true);
-
-    // circlesGroup = updateToolTip(circlesGroup, chosenXAxis, chosenYAxis);
-
+//})
       xlabelsGroup.selectAll("text")
     .on("click", function() {
 
@@ -231,18 +209,17 @@ var xText = d3.select(".yText");
 
       xLinearScale = xScale(data, chosenXAxis);
 
-      xAxis = renderXAxes(xLinearScale, xAxis);
+      //xAxis = renderXAxes(xLinearScale, xAxis);
+      xAxis =svg.attr("xAxis");
 
-      circlesXY = renderXCircles(circlesXY, xLinearScale, chosenXAxis);
+      //circlesXY = renderXCircles(circlesXY, xLinearScale, chosenXAxis);
+      circlesXY = svg.attr("renderXCircles");
 
-      circlesText = renderXText(circlesText, xLinearScale, chosenXAxis);
-
-    //}
-
+      circlesText = svg.attr("renderXText");//(circlesText, xLinearScale, chosenXAxis);
+    }
 
       circlesGroup = updateToolTip(circlesGroup, chosenXAxis, chosenYAxis);
 
-    //}
 
           if (chosenXAxis === "age") {
         povertyLabel
@@ -268,7 +245,7 @@ var xText = d3.select(".yText");
           .classed("inactive", false);
       }
 
-            else if (chosenXAxis === "Household Income") {
+            else if (chosenXAxis === "poverty") {
         povertyLabel
           .classed("active", true)
           .classed("inactive", false);
@@ -278,10 +255,9 @@ var xText = d3.select(".yText");
         incomeLabel
           .classed("active", false)
           .classed("inactive", true);
-        }
+        
       }
     });
-  // });
 
        ylabelsGroup.selectAll("text")
     .on("click", function() {
@@ -292,11 +268,11 @@ var xText = d3.select(".yText");
 
       yLinearScale = yScale(data, chosenYAxis);
 
-      yAxis = renderYAxes(yLinearScale, yAxis);
+      yAxis = svg.attr("yAxis");
 
-      circlesXY = renderYCircles(circlesXY, yLinearScale, chosenYAxis);
+      circlesXY = svg.attr("renderYCircles");//(circlesXY, yLinearScale, chosenYAxis);
 
-      circlesText = renderYText(circlesText, yLinearScale, chosenYAxis);
+      circlesText = svg.attr("renderYText");//(circlesText, yLinearScale, chosenYAxis);
 
     }
 
@@ -336,6 +312,6 @@ var xText = d3.select(".yText");
         obeseLabel
           .classed("active", false)
           .classed("inactive", true);
-      }
+        }
+      });
     });
-  //});
