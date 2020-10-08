@@ -1,11 +1,3 @@
-// function makeResponsive() {
-
-//   var svgArea = d3.select("body").select("svg");
-
-//   if (!svgArea.empty()) {
-//     svgArea.remove();
-//   }
-
 var svgWidth = 960;
 var svgHeight = 500;
 
@@ -53,10 +45,8 @@ function xScale(data, chosenXAxis, chartWidth) {
 var x = d3.scaleBand()
   .range([ 0, width ])
   .padding(0.2);
-// var xAxis = svg.append("g")
-//   .attr("transform", "translate(0," + height + ")")
-  var xAxis = svg.append("g").attr("class", "x axis")
-    .attr("transform", "translate(0," + height + ")")
+var xAxis = svg.append("g")
+  .attr("transform", "translate(0," + height + ")")
 
 function yScale(data, chosenYAxis, chartHeight) {
     var yLinearScale = d3.scaleLinear()
@@ -112,42 +102,7 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, textGroup) {
       }
     }
 
-//     var toolTip = d3.tip()
-//         .offset([120, -60])
-//         .attr("class", "tooltip")
-//         .html(function(d) {
-//             if (chosenXAxis === "age") {
-//                 return (`${d.state}<hr>${xlabel} ${d[chosenXAxis]}<br>${ylabel}${d[chosenYAxis]}%`);
-//                 } else if (chosenXAxis !== "poverty" && chosenXAxis !== "age") {
-//                 return (`${d.state}<hr>${xlabel}$${d[chosenXAxis]}<br>${ylabel}${d[chosenYAxis]}%`);
-//                 } else {
-//                 return (`${d.state}<hr>${xlabel}${d[chosenXAxis]}%<br>${ylabel}${d[chosenYAxis]}%`);
-//                 }      
-//         });
-//     circlesGroup.call(toolTip);
-//     circlesGroup
-//         .on("mouseover", function(data) {
-//             toolTip.show(data, this);
-//         })
-//         .on("mouseout", function(data) {
-//             toolTip.hide(data);
-//         });
-//     textGroup
-//         .on("mouseover", function(data) {
-//             toolTip.show(data, this);
-//         })
-//         .on("mouseout", function(data) {
-//             toolTip.hide(data);
-//         });
-//     return circlesGroup;
-
-// function makeResponsive() {
-//     // Select div by id.
-//     var svgArea = d3.select("#scatter").select("svg");
-//     // Clear SVG.
-//     if (!svgArea.empty()) {
-//         svgArea.remove();
-//     }
+ 
       
 
 svg.append("g").attr("class", "xText");
@@ -171,12 +126,12 @@ var xText = d3.select(".yText");
         data.income = +data.income;
       })
 
-//       xlabelsGroup.selectAll("text")
-//       .on("click",function(){
-// //do something
-//  const value = d3.select(this).attr("value");
-//  passValueAlongToUpdateXScale(value)
-// })//end click 
+      xlabelsGroup.selectAll("text")
+      .on("click",function(){
+//do something
+ const value = d3.select(this).attr("value");
+ passValueAlongToUpdateXScale(value)
+})//end click 
 
 function passValueAlongToUpdateXScale(value){
 return d3.scaleLinear()
@@ -184,30 +139,14 @@ return d3.scaleLinear()
     .range([0, svgWidth]);
 } 
 
-
-    var xScale = d3.scaleLinear()
-    .domain(d3.extent(data, d => d.poverty))
-    .range([0, svgWidth]);
-
-    // var renderXAxes = xAxis.transition()
-    // .duration(1000)
-    // .call(bottomAxis);
+    // var xScale = d3.scaleLinear()
+    // .domain(d3.extent(data, d => d.poverty))
+    // .range([0, svgWidth]);
 
 
      var yScale = d3.scaleLinear()
     .domain([0, d3.max(data, d => d.healthcare)])
     .range([svgHeight, 0]);
-
-    // var renderYAxes = newYScale()
-    // .duration(1000)
-    // .call(leftAxis);
-
-
-    // var renderCircles = circlesGroup()
-    // .duration(1000)
-    // .attr("cx", d => newXScale(d[poverty]))
-    // .attr("cy", d => newYScale(d[healthcare]));
-
 
      svg.append("path")
     .attr("stroke", "black")
@@ -299,7 +238,7 @@ return d3.scaleLinear()
 
       //xAxis = renderXAxes(xLinearScale, xAxis);
       xAxis =svg.attr("xAxis");
-      xAxis = renderXAxes(xLinearScale, xAxis);
+      //xAxis = renderXAxes(xLinearScale, xAxis);
 
       //circlesXY = renderXCircles(circlesXY, xLinearScale, chosenXAxis);
       circlesXY = svg.attr("renderXCircles");
@@ -344,9 +283,6 @@ return d3.scaleLinear()
         incomeLabel
           .classed("active", false)
           .classed("inactive", true);
-
-    const value = d3.select(this).attr("value");
-    passValueAlongToUpdateXScale(value)
         
       }
     });
@@ -405,30 +341,5 @@ return d3.scaleLinear()
           .classed("active", false)
           .classed("inactive", true);
         }
-
-//               var toolTip = d3.tip()
-//         .attr("class", "tooltip")
-//         .offset([80, -60])
-//         .html(function(d) {
-//           return (`<strong>${dateFormatter(d.date)}<strong><hr>${d.medals}
-//           medal(s) won`);
-//         });
-
-//       chartGroup.call(toolTip);
-
-//       circlesGroup.on("mouseover", function(d) {
-//         toolTip.show(d, this);
-//       })
-//         .on("mouseout", function(d) {
-//           toolTip.hide(d);
-//         });
-//     }).catch(function(error) {
-//       console.log(error);
-//     });
-// }
-
-// makeResponsive();
-
-// d3.select(window).on("resize", makeResponsive);
       });
     });
